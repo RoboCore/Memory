@@ -1,0 +1,5 @@
+
+AvailableMemory	KEYWORD2
+freeRAM	KEYWORD2
+
+
