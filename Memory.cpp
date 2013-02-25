@@ -134,6 +134,10 @@ boolean PointerList::Free(void* ptr){
   if(!_initialized)
     return false;
   
+  // DO NOT free a NULL pointer
+  if(ptr == NULL)
+    return true;
+  
   for(uint16_t i=0 ; i < POINTER_LIST_SIZE ; i++){
     if(_list[i] == ptr){ //found the pointer
       free(ptr); //free the pointer
