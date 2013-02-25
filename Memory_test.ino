@@ -4,9 +4,6 @@
 //-------------------------------------------------------------------------------------------------
 
 
-extern int __heap_start;
-extern int* __brkval;
-
 
 void setup(){
   Serial.begin(9600);
@@ -37,8 +34,39 @@ void loop(){
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
-  Serial.println("--- FIM ---");
+  Serial.println("--- list test ---");
+  AvailableMemory(&Serial);
+  AvailableMemory(&Serial, true);
   
+  if(!PointerList::isInitialized())
+    Serial.println("NOT initialized");
+  else
+    Serial.println("Initialized");
+  
+  PointerList::Initialize();
+  
+  void* Mptr1 = Mmalloc(100);
+  void* Mptr2 = Mmalloc(200);
+  void* Mptr3 = Mmalloc(100);
+//  PointerList::Initialize();
+  PointerList::DisplayList(&Serial, DEC);
+  AvailableMemory(&Serial);
+  AvailableMemory(&Serial, true);
+  
+  Mfree(Mptr1);
+  PointerList::FreeIndex(1);
+  PointerList::DisplayList(&Serial, DEC);
+  AvailableMemory(&Serial);
+  AvailableMemory(&Serial, true);
+  
+  Serial.println("* reset");
+//  PointerList::Reset();
+  MReset();
+  PointerList::DisplayList(&Serial, DEC);
+  AvailableMemory(&Serial);
+  AvailableMemory(&Serial, true);
+  
+  Serial.println("--- FIM ---");
   while(1){
     delay(100);
   }

@@ -3,3 +3,22 @@ AvailableMemory	KEYWORD2
 freeRAM	KEYWORD2
 
 
+
+PointerList	KEYWORD1
+
+Mmalloc	KEYWORD2
+Mfree	KEYWORD2
+MReset	KEYWORD2
+
+DisplayList	KEYWORD2
+Free	KEYWORD2
+FreeIndex	KEYWORD2
+FreeList	KEYWORD2
+Initialize	KEYWORD2
+isInitialized	KEYWORD2
+ListCount	KEYWORD2
+Malloc	KEYWORD2
+Reset	KEYWORD2
+
+
+
