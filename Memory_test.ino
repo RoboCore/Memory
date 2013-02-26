@@ -7,6 +7,13 @@
 
 void setup(){
   Serial.begin(9600);
+  
+  Serial.print("Using Pointer List: ");
+  if(UsingPointerList())
+    Serial.println("OK");
+  else
+    Serial.println("no");
+  Serial.println();
 }
 
 

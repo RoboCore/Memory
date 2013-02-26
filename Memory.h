@@ -3,9 +3,10 @@
 
 /*
 	RoboCore Memory Library
-		(v1.1 - 25/02/2013)
+		(v1.2 - 26/02/2013)
 
-  Memory functions for Arduino (for Arduino 1.0 or later)
+  Memory functions for Arduino
+    (tested only in Arduino 1.0.1)
 
   Released under the Beerware licence
 
@@ -13,15 +14,22 @@ The PointerList class implements static functionality to track
 	allocated memory.
 	# one must first Initialize the values
 	# the tracker capacity is limited and can be changed in
-		'Memory.h'
+		with POINTER_LIST_SIZE
 	# macros 'Mmalloc()', 'Mfree()' and 'MReset()' defined
+        # leave USE_POINTER_LIST defined to use this class
+                (other libraries use this functionality if defined,
+                otherwise use 'standard' malloc())
         !!! DO NOT use free() on pointers added to the list
 */
 
-
-#include "Arduino.h" //for Arduino 1.0 or later
+#if defined(ARDUINO) && (ARDUINO >= 100)
+#include <Arduino.h> //for Arduino 1.0 or later
+#else
+#include <WProgram.h> //for Arduino 22
+#endif
 
 //#define RC_MEM_DEBUG
+#define USE_POINTER_LIST //define if want to use the Pointer List (or else comment this line)
 
 //-------------------------------------------------------------------------------------------------
 
@@ -44,6 +52,11 @@ int freeListSize();
 
 //-------------------------------------------------------------------------------------------------
 
+// Check if using the Pointer List
+boolean UsingPointerList();
+
+//-------------------------------------------------------------------------------------------------
+#ifdef USE_POINTER_LIST 
 
 #define POINTER_LIST_SIZE 50
 
@@ -72,5 +85,6 @@ class PointerList{
     static boolean Reset();
 };
 
+#endif //#ifdef USE_POINTER_LIST
 
 #endif
