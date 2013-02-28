@@ -5,7 +5,7 @@
 		(v1.2 - 26/02/2013)
 
   Memory functions for Arduino
-    (tested only in Arduino 1.0.1)
+    (tested with Arduino 0022 and 1.0.1)
 
   Released under the Beerware licence
 
