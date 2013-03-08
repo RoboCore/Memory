@@ -3,7 +3,7 @@
 
 /*
 	RoboCore Memory Library
-		(v1.2 - 26/02/2013)
+		(v1.3 - 01/03/2013)
 
   Memory functions for Arduino
     (tested with Arduino 0022 and 1.0.1)
@@ -31,6 +31,11 @@ The PointerList class implements static functionality to track
 //#define RC_MEM_DEBUG
 #define USE_POINTER_LIST //define if want to use the Pointer List (or else comment this line)
 
+// options for DisplayFreeList()
+#define DISPLAY_HEAP_START (1 << 0)
+#define DISPLAY_BRKVAL (1 << 1)
+#define DISPLAY_SIZE (1 << 2)
+
 //-------------------------------------------------------------------------------------------------
 
 // Display the available memory
@@ -39,16 +44,21 @@ void AvailableMemory(HardwareSerial* serial, boolean total);
 
 //-------------------------------------------------------------------------------------------------
 
+// Display the items in the Free List (with bitwise options)
+void DisplayFreeList(HardwareSerial* serial, byte options);
+
+//-------------------------------------------------------------------------------------------------
+
 // Return the free space in RAM (in bytes)
 //    NOTE: even after calling 'free()' __brkval might not decrease.
 //            The memory block will nevertheless be marked as free.
-int freeRAM();
+int freeRAM(void);
 int freeRAM(boolean total);
 
 //-------------------------------------------------------------------------------------------------
 
 // Calculates the size of the free list (thanks to Matthew Murdoch)
-int freeListSize();
+int freeListSize(void);
 
 //-------------------------------------------------------------------------------------------------
 
@@ -63,7 +73,7 @@ boolean UsingPointerList();
 //macros with a different name to not confuse with malloc() and free()
 #define Mmalloc(X) PointerList::Malloc(X)
 #define Mfree(X) PointerList::Free(X)
-#define MReset() PointerList::Reset()
+#define MReset(X) PointerList::Reset(X)
 
 
 class PointerList{
@@ -77,12 +87,12 @@ class PointerList{
     static void DisplayList(HardwareSerial* printer, uint8_t format);
     static boolean Free(void* ptr);
     static boolean FreeIndex(uint16_t index);
-    static boolean FreeList();
-    static void Initialize();
-    static boolean isInitialized();
-    static uint16_t ListCount();
+    static boolean FreeList(void);
+    static void Initialize(void);
+    static boolean isInitialized(void);
+    static uint16_t ListCount(void);
     static void* Malloc(size_t size);
-    static boolean Reset();
+    static boolean Reset(void);
 };
 
 #endif //#ifdef USE_POINTER_LIST

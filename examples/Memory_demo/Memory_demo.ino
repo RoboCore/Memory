@@ -1,5 +1,5 @@
 
-#include "Memory.h"
+#include <Memory.h>
 
 //-------------------------------------------------------------------------------------------------
 
@@ -21,21 +21,24 @@ void setup(){
 void loop(){
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
+  DisplayFreeList(&Serial, DISPLAY_HEAP_START | DISPLAY_BRKVAL | DISPLAY_SIZE);
+  Serial.println("--- start ---");
   
   void* ptr = malloc(100);
-  Serial.println((int)ptr);
+  Serial.println((int)ptr, HEX);
   
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
   void* ptr2 = malloc(200);
-  Serial.println((int)ptr2);
+  Serial.println((int)ptr2, HEX);
   
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
   free(ptr);
   free(ptr2);
+  DisplayFreeList(&Serial, DISPLAY_HEAP_START | DISPLAY_BRKVAL | DISPLAY_SIZE);
   Serial.println("--- freed ---");
   
   AvailableMemory(&Serial);
@@ -56,23 +59,24 @@ void loop(){
   void* Mptr2 = Mmalloc(200);
   void* Mptr3 = Mmalloc(100);
 //  PointerList::Initialize();
-  PointerList::DisplayList(&Serial, DEC);
+  PointerList::DisplayList(&Serial, HEX);
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
   Mfree(Mptr1);
   PointerList::FreeIndex(1);
-  PointerList::DisplayList(&Serial, DEC);
+  PointerList::DisplayList(&Serial, HEX);
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
   Serial.println("* reset");
 //  PointerList::Reset();
   MReset();
-  PointerList::DisplayList(&Serial, DEC);
+  PointerList::DisplayList(&Serial, HEX);
   AvailableMemory(&Serial);
   AvailableMemory(&Serial, true);
   
+  DisplayFreeList(&Serial, DISPLAY_HEAP_START | DISPLAY_BRKVAL | DISPLAY_SIZE);
   Serial.println("--- FIM ---");
   while(1){
     delay(100);

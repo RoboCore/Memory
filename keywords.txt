@@ -1,5 +1,6 @@
 
 AvailableMemory	KEYWORD2
+DisplayFreeList	KEYWORD2
 freeRAM	KEYWORD2
 UsingPointerList	KEYWORD2
 

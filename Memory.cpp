@@ -2,7 +2,7 @@
 
 /*
 	RoboCore Memory Library
-		(v1.2 - 26/02/2013)
+		(v1.3 - 01/03/2013)
 
   Memory functions for Arduino
     (tested with Arduino 0022 and 1.0.1)
@@ -57,10 +57,38 @@ void AvailableMemory(HardwareSerial* serial, boolean total){
 
 //-------------------------------------------------------------------------------------------------
 
+// Display the items in the Free List (with bitwise options)
+void DisplayFreeList(HardwareSerial* serial, byte options){
+  struct __freelist* current;
+
+  //display header
+  if(options & DISPLAY_HEAP_START){
+    serial->print("*heap start: ");
+    serial->println((int)&__heap_start, HEX);
+  }
+  if(options & DISPLAY_BRKVAL){
+    serial->print("*brkval: ");
+    serial->println((int)__brkval, HEX);
+  }
+
+  for (current = __flp; current; current = current->nx) {
+    serial->print("\t>");
+    if(options & DISPLAY_SIZE){
+      serial->print((int)current, HEX);
+      serial->print(" : ");
+      serial->println(current->sz + 2);
+    } else {
+      serial->println((int)current, HEX);
+    }
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 // Return the free space in RAM (in bytes)
 //    NOTE: even after calling 'free()' __brkval might not decrease.
 //            Nevertheless, the memory block will be marked as free.
-int freeRAM(){
+int freeRAM(void){
   int v;
   return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
 }
@@ -78,7 +106,7 @@ int freeRAM(boolean total){
 //-------------------------------------------------------------------------------------------------
 
 // Calculates the size of the free list (thanks to Matthew Murdoch)
-int freeListSize() {
+int freeListSize(void) {
   struct __freelist* current;
   int total = 0;
 
@@ -93,7 +121,7 @@ int freeListSize() {
 //-------------------------------------------------------------------------------------------------
 
 // Check if using the Pointer List
-boolean UsingPointerList(){
+boolean UsingPointerList(void){
 #ifdef USE_POINTER_LIST
   return true;
 #else
@@ -190,7 +218,7 @@ boolean PointerList::FreeIndex(uint16_t index){
 //-------------------------------------------------------------------------------------------------
 
 // Frees the list
-boolean PointerList::FreeList(){
+boolean PointerList::FreeList(void){
   //check if variables were initialized
   if(!_initialized)
     return false;
@@ -209,7 +237,7 @@ boolean PointerList::FreeList(){
 //-------------------------------------------------------------------------------------------------
 
 // Initialize the static values
-void PointerList::Initialize(){
+void PointerList::Initialize(void){
   //check if variables were initialized
   if(_initialized)
     return;
@@ -223,14 +251,14 @@ void PointerList::Initialize(){
 //-------------------------------------------------------------------------------------------------
 
 // Check if values were initialized
-boolean PointerList::isInitialized(){
+boolean PointerList::isInitialized(void){
   return _initialized;
 }
 
 //-------------------------------------------------------------------------------------------------
 
 // Get the number of allocate pointers in the list
-uint16_t PointerList::ListCount(){
+uint16_t PointerList::ListCount(void){
   return _count;
 }
 
@@ -271,7 +299,7 @@ void* PointerList::Malloc(size_t size){
 //-------------------------------------------------------------------------------------------------
 
 // Reset the static values
-boolean PointerList::Reset(){
+boolean PointerList::Reset(void){
   //check if variables were initialized
   if(!_initialized)
     return false;
@@ -281,6 +309,9 @@ boolean PointerList::Reset(){
   
   return true;
 }
+
+//-------------------------------------------------------------------------------------------------
+
 
 #endif //#ifdef USE_POINTER_LIST
 
