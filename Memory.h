@@ -63,7 +63,7 @@ int freeListSize(void);
 //-------------------------------------------------------------------------------------------------
 
 // Check if using the Pointer List
-boolean UsingPointerList();
+boolean UsingPointerList(void);
 
 //-------------------------------------------------------------------------------------------------
 #ifdef USE_POINTER_LIST 
