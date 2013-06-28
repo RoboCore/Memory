@@ -5,7 +5,8 @@
   Memory functions for Arduino
     (tested with Arduino 0022 and 1.0.1)
 
-  Released under the Beerware licence
+  Released under the Beerware license
+  Written by François
 
 
 The PointerList class implements static functionality to track
