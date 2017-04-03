@@ -3,7 +3,7 @@
 
 /*
 	RoboCore Memory Library
-		(v1.3 - 01/03/2013)
+		(v1.4 - 14/03/2017)
 
   Memory functions for Arduino
     (tested with Arduino 0022 and 1.0.1)
@@ -55,8 +55,8 @@ The PointerList class implements static functionality to track
 //-------------------------------------------------------------------------------------------------
 
 // Display the available memory
-void AvailableMemory(HardwareSerial* serial);
-void AvailableMemory(HardwareSerial* serial, boolean total);
+void AvailableMemory(Stream* serial);
+void AvailableMemory(Stream* serial, boolean total);
 
 //-------------------------------------------------------------------------------------------------
 

@@ -2,7 +2,7 @@
 
 /*
 	RoboCore Memory Library
-		(v1.3 - 01/03/2013)
+		(v1.4 - 14/03/2017)
 
   Memory functions for Arduino
     (tested with Arduino 0022 and 1.0.1)
@@ -60,15 +60,15 @@ extern unsigned int __heap_start; // = __bss_end
 //-------------------------------------------------------------------------------------------------
 
 // Display the available memory
-void AvailableMemory(HardwareSerial* serial){
-  serial->print("[mem] ");
-  serial->println(freeRAM());
+void AvailableMemory(Stream* stream){
+  stream->print("[mem] ");
+  stream->println(freeRAM());
 }
 
 
-void AvailableMemory(HardwareSerial* serial, boolean total){
-  serial->print("[mem] ");
-  serial->println(freeRAM(total));
+void AvailableMemory(Stream* stream, boolean total){
+  stream->print("[mem] ");
+  stream->println(freeRAM(total));
 }
 
 //-------------------------------------------------------------------------------------------------
